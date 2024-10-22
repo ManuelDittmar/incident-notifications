@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: IncidentAlerts
+
+operate:
+  client:
+    profile: saas
+    region: bru-2
+    cluster-id: xxx
+    client-id: xxx
+    client-secret: xxx
+
+
+incident-alert:
+  operate:
+    base-url: https://${operate.client.region}.operate.camunda.io/${operate.client.cluster-id}/operate
+  enabled: true
+  cron-expression: "*/30 * * * * *"
+  subscriptions:
+    - type: SUMMARY
+      integration:
+        type: WEBHOOK
+        webhook:
+          url: https://bru-2.connectors.camunda.io/xxxx/inbound/MyCustomWebhookForIncidents
+    - type: INDIVIDUAL
+      integration:
+        type: SNS
+        sns:
+          topic-arn: arn:aws:sns:eu-central-1:xxx:IncidentsTest
+          access-key: xxx
+          secret-key: xxx
+          region: eu-central-1
